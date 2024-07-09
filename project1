@@ -1,1 +1,92 @@
+import java.util.*;
 
+class Question {
+    private String text;
+    private List<String> options;
+    private int correctAnswer;
+
+    public Question(String text, List<String> options, int correctAnswer) {
+        this.text = text;
+        this.options = options;
+        this.correctAnswer = correctAnswer;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public int getCorrectAnswer() {
+        return correctAnswer;
+    }
+}
+
+class Quiz {
+    private List<Question> questions;
+
+    public Quiz() {
+        this.questions = new ArrayList<>();
+    }
+
+    public void addQuestion(Question question) {
+        this.questions.add(question);
+    }
+
+    public void takeQuiz() {
+        Scanner scanner = new Scanner(System.in);
+        int score = 0;
+
+        for (Question question : questions) {
+            System.out.println(question.getText());
+            for (int i = 0; i < question.getOptions().size(); i++) {
+                System.out.println((i + 1) + ". " + question.getOptions().get(i));
+            }
+
+            System.out.print("Enter your answer (1-" + question.getOptions().size() + "): ");
+            int userAnswer = scanner.nextInt();
+
+            if (userAnswer == question.getCorrectAnswer()) {
+                score++;
+                System.out.println("Correct!\n");
+            } else {
+                System.out.println("Incorrect. The correct answer is " + question.getCorrectAnswer() + ".\n");
+            }
+        }
+
+        System.out.println("Your final score is " + score + " out of " + questions.size());
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Quiz quiz = new Quiz();
+
+        List<String> options1 = new ArrayList<>();
+        options1.add("Chevrolet");
+        options1.add("Ford");
+        options1.add("Dodge");
+        Question question1 = new Question("Which car brand is known for producing Mustang models of cars?", options1,
+                2);
+        quiz.addQuestion(question1);
+
+        List<String> options2 = new ArrayList<>();
+        options2.add("Anti-lock Braking System");
+        options2.add("All lock Braking Systems");
+        options2.add("Anti Braking System");
+        Question question2 = new Question("What is the full form of ABS, a safety technology used in cars and bikes?",
+                options2, 1);
+        quiz.addQuestion(question2);
+
+        List<String> options3 = new ArrayList<>();
+        options3.add("Affordable car");
+        options3.add("Peoples car");
+        options3.add("National Wagon");
+        Question question3 = new Question("What does Volkswagen mean in German??", options3, 2);
+        quiz.addQuestion(question3);
+
+        quiz.takeQuiz();
+    }
+}
